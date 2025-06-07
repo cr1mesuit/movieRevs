@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - Movie Site</title>
+</head>
+<body>
+    <header style="padding: 10px; background-color: #eee;">
+        <nav style="display: flex; justify-content: space-between;">
+            <div>
+                <a href="/">Главная</a> <text>|</text>
+                <a href="/Movies">Фильмы</a>
+
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <text> | </text>
+                    <a href="/Movies/Suggest">Предложить фильм</a>
+                }
+
+                @if (User.Identity?.IsAuthenticated == true && User.HasClaim("IsAdmin", "true"))
+                {
+                    <text> | </text>
+                    <a href="/Admin">Админка</a>
+                }
+            </div>
+
+            <div>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <form method="post" asp-page="/Account/Logout" style="display:inline">
+                        <span>Привет, @User.Identity.Name!</span>
+                        <button type="submit">Выйти</button>
+                    </form>
+                }
+                else
+                {
+                    <a href="/Account/Login">Вход</a> <text>|</text>
+                    <a href="/Account/Register">Регистрация</a>
+                }
+            </div>
+        </nav>
+    </header>
+
+    <main style="padding: 20px;">
+        @RenderBody()
+    </main>
+</body>
+</html>

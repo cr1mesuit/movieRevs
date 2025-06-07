@@ -1,0 +1,32 @@
+﻿@page
+@using MovieRevs.Models
+@model MovieRevs.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Админка";
+}
+
+<h2>Админская панель</h2>
+<div>
+    <a asp-page="/Admin/Users">Пользователи</a>
+    <a href="/Admin/AddMovieFromApi">Добавить фильм из API</a>
+    <a href="/Admin/Suggestions">Предложенные фильмы</a>
+</div>
+<h3>Добавить фильм</h3>
+
+<form method="post">
+    <input asp-for="NewMovie.Title" placeholder="Название" required />
+    <input asp-for="NewMovie.Description" placeholder="Описание" required />
+    <input type="number" asp-for="NewMovie.ReleaseDate" placeholder="год выхода" required />
+    <button type="submit">Добавить</button>
+</form>
+
+<h3>Список фильмов</h3>
+<ul>
+@foreach (var movie in Model.Movies)
+{
+    <li><strong>@movie.Title</strong>: @movie.Description
+            <a href="/Admin/EditMovie/@movie.Id">Редактировать</a>
+        </li>
+    @movie.ReleaseDate
+}
+</ul>

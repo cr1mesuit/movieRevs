@@ -1,0 +1,30 @@
+﻿@page
+@model MovieRevs.Pages.Admin.AddMovieModel
+@{
+    ViewData["Title"] = "Добавить фильм";
+}
+
+<h2>Добавить фильм</h2>
+
+<form method="post">
+    <div>
+        <label>Название:</label>
+        <input asp-for="Movie.Title" />
+    </div>
+    <div>
+        <label>Описание:</label>
+        <textarea asp-for="Movie.Description"></textarea>
+    </div>
+    <div>
+        <label>Год:</label>
+        <input asp-for="Movie.ReleaseDate" type="number" />
+    </div>
+    <div>
+        <button type="submit">Сохранить</button>
+    </div>
+</form>
+
+@if (Model.Message != null)
+{
+    <p style="color:green;">@Model.Message</p>
+}

@@ -1,0 +1,19 @@
+﻿@page
+@model MovieRevs.Pages.Movies.SuggestModel
+@{
+    ViewData["Title"] = "Предложить фильм";
+}
+
+<h2>Предложить фильм</h2>
+
+<form method="post">
+    <div>
+        <label>Название:</label><br />
+        <input asp-for="Suggestion.Title" required />
+    </div>
+    <div>
+        <label>Описание:</label><br />
+        <textarea asp-for="Suggestion.Description" rows="5" required></textarea>
+    </div>
+    <button type="submit">Отправить</button>
+</form>

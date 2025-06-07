@@ -1,0 +1,15 @@
+﻿@page
+@model MovieRevs.Pages.Account.RegisterModel
+
+<h2>Register</h2>
+
+<form method="post">
+    <input name="Username" placeholder="Username" />
+    <input name="Password" type="password" placeholder="Password" />
+    <button type="submit">Register</button>
+</form>
+
+@if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+{
+    <p style="color:red">@Model.ErrorMessage</p>
+}

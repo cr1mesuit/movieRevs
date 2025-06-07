@@ -1,0 +1,23 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Фильмы";
+}
+
+<h2>Фильмы</h2>
+
+<form method="get">
+    <input type="text" name="search" value="@Model.Search" placeholder="Название" />
+    <button type="submit">Поиск</button>
+</form>
+
+<ul>
+    @foreach (var movie in Model.Movies)
+    {
+        <li>
+            <strong><a href="/Movies/Details/@movie.Id">>@movie.Title</a></strong> (@movie.ReleaseDate)<br />
+            
+            
+        </li>
+    }
+</ul>

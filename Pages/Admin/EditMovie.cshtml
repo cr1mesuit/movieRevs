@@ -1,0 +1,36 @@
+﻿@page "{id:int}"
+@model MovieRevs.Pages.Admin.EditMovieModel
+@{
+    ViewData["Title"] = "Редактировать фильм";
+}
+
+<h2>Редактировать фильм</h2>
+
+@if (User.Identity?.IsAuthenticated == true && User.HasClaim("IsAdmin", "true"))
+{
+    <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Удалить фильм?')">
+        <input type="hidden" name="id" value="@Model.Movie.Id" />
+        <button type="submit" style="color: red;">Удалить фильм</button>
+    </form>
+}
+
+<form method="post">
+    <input type="hidden" asp-for="Movie.Id" />
+
+    <div>
+        <label>Название:</label>
+        <input asp-for="Movie.Title" />
+    </div>
+
+    <div>
+        <label>Описание:</label>
+        <textarea asp-for="Movie.Description"></textarea>
+    </div>
+
+    <div>
+        <label>Год:</label>
+        <input asp-for="Movie.ReleaseDate" type="number" />
+    </div>
+
+    <button type="submit">Сохранить изменения</button>
+</form>

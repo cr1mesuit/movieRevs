@@ -1,0 +1,70 @@
+﻿@page "{id:int}"
+@model MovieRevs.Pages.Movies.DetailsModel
+@{
+    ViewData["Title"] = "Фильм: " + Model.Movie?.Title;
+}
+
+@if (Model.Movie is null)
+{
+    <p>Фильм не найден.</p>
+}
+else
+{
+    <h2>@Model.Movie.Title</h2>
+    <p><strong>Описание:</strong> @Model.Movie.Description</p>
+    <p><strong>Год:</strong> @Model.Movie.ReleaseDate</p>
+
+    <h3>Отзывы</h3>
+    @if (Model.Movie.Reviews?.Any() == true)
+    {
+        <ul>
+            @foreach (var review in Model.Movie.Reviews)
+            {
+                <div style="margin-bottom: 10px; border: 1px solid #ccc; padding: 10px;">
+                    <strong>@review.UserName</strong> (@review.Rating/5):<br />
+                    @review.Content
+
+                    @if (User.Identity?.IsAuthenticated == true && User.HasClaim("IsAdmin", "true"))
+                    {
+                        <form method="post" asp-page-handler="DeleteReview" asp-route-reviewId="@review.Id" style="display:inline">
+                            <button type="submit" onclick="return confirm('Удалить отзыв?')">Удалить</button>
+                        </form>
+                    }
+                </div>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Отзывов пока нет.</p>
+    }
+
+    @if (Model.Movie?.Reviews?.Count > 0)
+    {
+        var avg = Model.Movie.Reviews.Average(r => r.Rating);
+        <h4>Средняя оценка: @avg.ToString("0.0") / 5</h4>
+    }
+    else
+    {
+        <h4>Оценок пока нет</h4>
+    }
+
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <form method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <label for="rating">Оценка:</label>
+            <input type="number" id="rating" asp-for="Rating" min="1" max="5" required />
+
+            <label for="content">Отзыв:</label>
+            <textarea id="content" asp-for="Content" required></textarea>
+
+            <button type="submit">Оставить отзыв</button>
+        </form>
+    }
+    else
+    {
+        <p><a href="/Account/Login">Войдите</a>, чтобы оставить отзыв.</p>
+    }
+}

@@ -1,0 +1,32 @@
+﻿@page
+@model MovieRevs.Pages.Admin.AddMovieFromApiModel
+@{
+    ViewData["Title"] = "Добавить фильм из API";
+}
+
+<h2>Добавить фильм из OMDb API</h2>
+
+<form method="post">
+    <input asp-for="Title" placeholder="Введите название фильма" required />
+    <button type="submit">Найти и добавить</button>
+</form>
+
+@if (Model.MovieFromApi != null)
+{
+    <h3>Найден фильм:</h3>
+    <p><strong>Название:</strong> @Model.MovieFromApi.Title</p>
+    <p><strong>Описание:</strong> @Model.MovieFromApi.Description</p>
+    <p><strong>Год выпуска:</strong> @Model.MovieFromApi.ReleaseDate</p>
+
+    <form method="post" asp-page-handler="Confirm">
+        <input type="hidden" asp-for="MovieFromApi.Title" />
+        <input type="hidden" asp-for="MovieFromApi.Description" />
+        <input type="hidden" asp-for="MovieFromApi.ReleaseDate" />
+        <button type="submit">Подтвердить добавление</button>
+    </form>
+}
+
+@if (Model.ErrorMessage != null)
+{
+    <p style="color:red;">@Model.ErrorMessage</p>
+}
